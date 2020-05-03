@@ -24,14 +24,16 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin.') }}" 
+               class="nav-link {{ request()->is('admin') ? 'active' : '' }}"
+            >
               <i class="fas fa-home nav-icon"></i>
               <p>Inicio</p>
             </a>
           </li>
           
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{ request()->is('admin/posts*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->is('admin/posts*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Blog
@@ -40,13 +42,17 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('admin.posts.index') }}" class="nav-link">
+                <a href="{{ route('admin.posts.index') }}" 
+                   class="nav-link {{ request()->is('admin/posts') ? 'active' : '' }}"
+                >
                   <i class="fas fa-circle nav-icon"></i>
                   <p>Todos los posts</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.posts.create') }}" 
+                   class="nav-link {{ request()->is('admin/posts/create') ? 'active' : '' }}"
+                >
                   <i class="far fa-circle nav-icon"></i>
                   <p>Crear un post</p>
                 </a>

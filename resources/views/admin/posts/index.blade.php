@@ -1,13 +1,18 @@
 @extends('admin.layout')
 
+@push('css')
+    <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+@endpush
+
 @section('header')
 <div class="row mb-2">
     <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Todos las publicaciones</h1>
+        <h1 class="m-0 text-dark">Posts</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('admin.') }}">Inicio</a></li>
           <li class="breadcrumb-item active">Posts</li>
         </ol>
     </div>
@@ -45,3 +50,16 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <!-- DataTables -->
+    <script src="{{asset('adminlte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script>
+        $(function () {
+          $('.datatable').DataTable();
+        });
+    </script>
+@endpush

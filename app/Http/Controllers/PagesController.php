@@ -9,7 +9,7 @@ class PagesController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest('published_at')->get();
+        $posts = Post::published()->get();
         return view('welcome', compact('posts'));
     }
 }
