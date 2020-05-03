@@ -13,19 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $posts = App\Post::latest('published_at')->get();
-    return view('welcome', compact('posts'));
-});
+Auth::routes();
+
+Route::get('/', 'PagesController@index');
 
 Route::get('/posts', function () {
     return App\Post::all();
 });
 
-Route::get('admin', function () {
-    return view('admin.dashboard');
+Route::get('/home','HomeController@index');
+
+Route::middleware('auth')
+     ->namespace('Admin')
+     ->as('admin.')
+     ->prefix('admin')
+     ->group( function () {
+            Route::resource('posts','PostsController');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
