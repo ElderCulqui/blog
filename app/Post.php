@@ -12,6 +12,11 @@ class Post extends Model
     ];
 
     protected $dates = ['published_at'];
+
+    public function getRouteKeyName()
+    {
+        return 'url';
+    }
     
     public function category()
     {

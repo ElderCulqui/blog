@@ -36,8 +36,11 @@ class PostsController extends Controller
             'category_id' => 'required|exists:categories,id',
             'tags' => 'required'
         ]);
-
-        $post = Post::create($validate);
+        
+        $url = Str::slug($request->title);
+        
+        $post = Post::create(array_merge($validate, ['url' => $url]));
+        
         $post->tags()->attach($request->tags);
 
         return redirect()->route('admin.posts.index')->with('flash','Tu publicación ha sido creada');
