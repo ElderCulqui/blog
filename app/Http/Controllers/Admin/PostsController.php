@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Post;
+use Illuminate\Support\Str;
+
 use App\Category;
+use App\Post;
 use App\Tag;
 
 class PostsController extends Controller
@@ -16,15 +18,34 @@ class PostsController extends Controller
         return view('admin.posts.index', compact('posts'));
     }
 
-    public function create()
+    // public function create()
+    // {
+    //     $categories = Category::all();
+    //     $tags = Tag::all();
+
+    //     return view('admin.posts.create', compact('categories','tags'));
+    // }
+
+    public function store(Request $request)
+    {   
+        $this->validate($request ,['title' => 'required']);
+
+        $post = Post::create([
+            'title' => $request->title,
+            'url' => Str::slug($request->title)
+        ]);
+
+        return redirect()->route('admin.posts.edit', $post);
+    }
+
+    public function edit(Post $post)
     {
         $categories = Category::all();
         $tags = Tag::all();
-
-        return view('admin.posts.create', compact('categories','tags'));
+        return view('admin.posts.edit', compact('post','categories','tags'));
     }
 
-    public function store(Request $request)
+    public function update(Request $request, Post $post)
     {
         //return $request->all();
 
@@ -39,10 +60,10 @@ class PostsController extends Controller
         
         $url = Str::slug($request->title);
         
-        $post = Post::create(array_merge($validate, ['url' => $url]));
+        $post->update(array_merge($validate, ['url' => $url]));
         
-        $post->tags()->attach($request->tags);
+        $post->tags()->sync($request->tags);
 
-        return redirect()->route('admin.posts.index')->with('flash','Tu publicación ha sido creada');
+        return redirect()->route('admin.posts.edit', $post)->with('flash','Tu publicación ha sido creada');
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Post;
+use App\Tag;
 use App\Category;
 use Carbon\Carbon;
 
@@ -35,6 +36,8 @@ class PostsTableSeeder extends Seeder
         $post->published_at = Carbon::now();
         $post->save();
 
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 1']));
+
         $post = new Post;
         $post->category_id = 2;
         $post->title = 'Mi segundo post';
@@ -43,6 +46,8 @@ class PostsTableSeeder extends Seeder
         $post->body = '<p>Contenido de mi segundo post</p>';
         $post->published_at = Carbon::now();
         $post->save();
+
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 2']));
         
         $post = new Post;
         $post->category_id = 1;
@@ -53,6 +58,8 @@ class PostsTableSeeder extends Seeder
         $post->published_at = Carbon::now();
         $post->save();
 
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 3']));
+
         $post = new Post;
         $post->category_id = 1;
         $post->title = 'Mi cuarto post';
@@ -61,5 +68,7 @@ class PostsTableSeeder extends Seeder
         $post->body = '<p>Contenido de mi cuarto post</p>';
         $post->published_at = Carbon::now();
         $post->save();
+
+        $post->tags()->attach(Tag::create(['name' => 'Etiqueta 4']));
     }
 }

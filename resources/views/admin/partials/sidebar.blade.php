@@ -50,8 +50,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin.posts.create') }}" 
-                   class="nav-link {{ request()->is('admin/posts/create') ? 'active' : '' }}"
+                <a href="#" data-toggle="modal" data-target="#myModal" 
+                   class="nav-link"
                 >
                   <i class="far fa-circle nav-icon"></i>
                   <p>Crear un post</p>

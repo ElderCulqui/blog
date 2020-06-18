@@ -25,5 +25,6 @@ Route::middleware('auth')
      ->group( function () {
             Route::get('/','AdminController@index');
             Route::resource('posts','PostsController');
+            Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.store');
 });
 

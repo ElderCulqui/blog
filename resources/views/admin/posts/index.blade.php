@@ -22,6 +22,9 @@
     <div class="card">
         <div class="card-header">
             Lista de las publicaciones
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+                <i class="fa fa-plus"></i> Crear publicación
+            </button>
         </div>
         <div class="card-body">
             <table class="table datatable">
@@ -40,7 +43,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->excerpt }}</td>
                             <td>
-                                <a href="#" class="btn btn-xs btn-info"><i class="fa fa-pen"></i></a>
+                                <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-xs btn-info"><i class="fa fa-pen"></i></a>
                                 <a href="#" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
