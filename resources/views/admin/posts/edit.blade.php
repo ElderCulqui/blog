@@ -134,13 +134,20 @@
               theme: 'bootstrap4'
             })
 
-            $(".dropzone").dropzone({ 
+            var myDropzone = $(".dropzone").dropzone({ 
                 url: '/admin/posts/{{ $post->url }}/photos',
+                acceptedFiles: 'image/*',
+                maxFilesize : 2,
+                paramName: 'photo',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 dictDefaultMessage: "Arrastre las fotos aquí para subirlas"
             });
+
+            myDropzone.on('error', function (response) {
+                
+            })
 
         })
     </script>

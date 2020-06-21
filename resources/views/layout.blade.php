@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="{{asset('css/style.css')}}">
 	<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+	@stack('style')
 	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 	@stack('script')
 </head>
