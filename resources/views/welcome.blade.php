@@ -17,6 +17,10 @@
 							</figure>
 						@endforeach
 					</div>
+				@elseif($post->iframe)
+					<div class="iframe-wrapper">
+					  {!! $post->iframe !!}
+					</div>
 				@endif
 				<div class="content-post">
 					<header class="container-flex space-between">

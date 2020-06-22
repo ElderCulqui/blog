@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use App\Post;
 use App\Photo;
@@ -23,5 +24,15 @@ class PhotosController extends Controller
             'post_id' => $post->id,
             'url' => Storage::url($photo)
         ]);
+    }
+
+    public function destroy(Photo $photo)
+    {
+        $photo->delete();
+        
+        $photoUrl = Str::of($photo->url)->replace('storage', 'public');
+        Storage::delete($photoUrl);
+        
+        return redirect()->back()->with('flash','Foto eliminada');
     }
 }

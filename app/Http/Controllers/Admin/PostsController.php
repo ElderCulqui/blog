@@ -52,6 +52,7 @@ class PostsController extends Controller
         $validate = $request->validate([
             'title' => 'required',
             'body' => 'required',
+            'iframe' => 'nullable',
             'excerpt' => 'required',
             'published_at' => 'date|nullable',
             'category_id' => 'required|exists:categories,id',

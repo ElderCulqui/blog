@@ -21,7 +21,29 @@
     </div>
 </div>  
 @endsection
+
 @section('content')
+
+@if ($post->photos->count())
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                @foreach ($post->photos as $photo)
+                    <form action="{{ route('admin.photos.destroy', $photo) }}" method="post">
+                        <div class="col-md-2">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-xs" style="position: absolute">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <img class="img-responsive" src="{{ asset($photo->url) }}" alt="" width="180" height="80">
+                        </div>
+                    </form>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
 <form action="{{ route('admin.posts.update',$post) }}" method="POST">
     @csrf
     @method('PUT')
@@ -49,6 +71,16 @@
                             >
                                 {{ old('body', $post->body) }}
                             </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Contenido embebido (iframe)</label>
+                        <div>
+                            <textarea class="form-control"
+                                id="iframe" 
+                                name="iframe" 
+                                placeholder="ingresa contenido embebido (iframe) de audio o video"    
+                            >{{ old('iframe', $post->iframe) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -116,6 +148,7 @@
         </div>
     </div>
 </form>
+
 @endsection
 
 @push('script')
@@ -128,7 +161,9 @@
 
         $(document).ready(function () {
         
-            $('#body').summernote();
+            $('#body').summernote({
+                height: 280
+            });
 
             $('.select2bs4').select2({
               theme: 'bootstrap4'

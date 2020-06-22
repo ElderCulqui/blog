@@ -25,6 +25,8 @@ Route::middleware('auth')
      ->group( function () {
             Route::get('/','AdminController@index');
             Route::resource('posts','PostsController');
-            Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.store');
+            Route::post('posts/{post}/photos', 'PhotosController@store')->name('posts.photos.store');
+            
+            Route::delete('photos/{photo}/', 'PhotosController@destroy')->name('photos.destroy');
 });
 
