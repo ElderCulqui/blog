@@ -10,6 +10,8 @@ use App\Category;
 use App\Post;
 use App\Tag;
 
+use App\Http\Requests\StorePostRequest;
+
 class PostsController extends Controller
 {
     public function index()
@@ -28,12 +30,9 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {   
-        $this->validate($request ,['title' => 'required']);
+        $validate = $request->validate(['title' => 'required']);
 
-        $post = Post::create([
-            'title' => $request->title,
-            'url' => Str::slug($request->title)
-        ]);
+        $post = Post::create($validate);
 
         return redirect()->route('admin.posts.edit', $post);
     }
@@ -45,26 +44,12 @@ class PostsController extends Controller
         return view('admin.posts.edit', compact('post','categories','tags'));
     }
 
-    public function update(Request $request, Post $post)
+    public function update(StorePostRequest $request, Post $post)
     {
-        //return $request->all();
+        $post->update($request->all());
+        
+        $post->syncTags($request->tags);
 
-        $validate = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-            'iframe' => 'nullable',
-            'excerpt' => 'required',
-            'published_at' => 'date|nullable',
-            'category_id' => 'required|exists:categories,id',
-            'tags' => 'required'
-        ]);
-        
-        $url = Str::slug($request->title);
-        
-        $post->update(array_merge($validate, ['url' => $url]));
-        
-        $post->tags()->sync($request->tags);
-
-        return redirect()->route('admin.posts.edit', $post)->with('flash','Tu publicación ha sido creada');
+        return redirect()->route('admin.posts.edit', $post)->with('flash','Tu publicación ha sido guardada');
     }
 }

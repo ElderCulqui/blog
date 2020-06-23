@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class Post extends Model
@@ -18,6 +19,17 @@ class Post extends Model
     ];
 
     protected $dates = ['published_at'];
+
+    public function setTitleAttribute($title)
+    {
+        $this->attributes['title'] = $title;
+        $this->attributes['url'] = Str::slug($title, '-');
+    }
+    
+    public function setCategoryIdAttribute($category)
+    {
+        $this->attributes['category_id'] = Category::find($category) ? $category : Category::create(['name' => $category])->id;
+    }
 
     public function getRouteKeyName()
     {
@@ -45,5 +57,14 @@ class Post extends Model
               ->where('published_at','<=',Carbon::now())
               ->latest('published_at')
         ;
+    }
+
+    public function syncTags($tags)
+    {
+        $tagIds = collect($tags)->map(function ($tag) {
+            return Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+        });
+
+        return $this->tags()->sync($tagIds);
     }
 }

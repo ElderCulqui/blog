@@ -101,7 +101,7 @@
                     <div class="form-group">
                         <label for="">Categorías</label>
                         <select name="category_id" 
-                            class="form-control"
+                            class="form-control select2"
                             value="{{ old('category_id') }}"
                         >
                             <option value="">Seleccionar</option>
@@ -119,7 +119,7 @@
                     <div class="form-group">
                         <label for="">Etiquetas</label>
                         <select name="tags[]" 
-                            class="form-control select2bs4" 
+                            class="form-control select2" 
                             multiple="multiple"
                             {{-- value="{{ old('tags') }}" --}}
                         >
@@ -165,8 +165,9 @@
                 height: 280
             });
 
-            $('.select2bs4').select2({
-              theme: 'bootstrap4'
+            $('.select2').select2({
+              theme: 'bootstrap4',
+              tags: true
             })
 
             var myDropzone = $(".dropzone").dropzone({ 
