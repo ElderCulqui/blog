@@ -17,6 +17,7 @@ Auth::routes();
 
 Route::get('/', 'PagesController@index')->name('home');
 Route::get('blog/{post}','PostsController@show')->name('posts.show');
+Route::get('categorias/{category}','CategoriesController@show')->name('categories.show');
 
 Route::middleware('auth')
      ->namespace('Admin')
