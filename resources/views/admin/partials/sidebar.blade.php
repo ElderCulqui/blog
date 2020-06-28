@@ -50,12 +50,17 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" data-toggle="modal" data-target="#myModal" 
-                   class="nav-link"
-                >
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Crear un post</p>
-                </a>
+                @if (request()->is('admin/posts/*'))
+                  <a href="{{ route('admin.posts.index', '#create') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Crear un post</p>
+                  </a>
+                @else
+                  <a href="#" data-toggle="modal" data-target="#myModal" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Crear un post</p>
+                  </a>
+                @endif
               </li>
             </ul>
           </li>

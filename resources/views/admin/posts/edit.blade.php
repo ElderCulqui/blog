@@ -36,7 +36,7 @@
                             <button class="btn btn-danger btn-xs" style="position: absolute">
                                 <i class="fa fa-times"></i>
                             </button>
-                            <img class="img-responsive" src="{{ asset($photo->url) }}" alt="" width="180" height="80">
+                            <img class="img-responsive" src="{{ Storage::url($photo->url) }}" alt="" width="180" height="80">
                         </div>
                     </form>
                 @endforeach

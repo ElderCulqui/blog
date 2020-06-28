@@ -8,17 +8,21 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            <form action="{{ route('admin.posts.store') }}" method="POST">
+            <form action="{{ route('admin.posts.store', '#create') }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group">
                         <label for="">Título</label>
-                        <input class="form-control" 
-                            type="text" name="title"
+                        <input  id="post-title" 
+                            class="form-control" 
+                            type="text" 
+                            name="title"
                             value="{{ old('title') }}"
                             placeholder="Título de la publicacion"
-                            required 
+                            {{-- autofocus --}}
+                            {{-- required --}}
                         >
+                            {!! $errors->first('title', '<span class="help-block">:message</span>')  !!} 
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -29,3 +33,16 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+    if (window.location.hash === '#create')
+    {
+      $('#myModal').modal('show');
+    }
+
+    $('#myModal').on('hide.bs.modal', function(){
+      window.location.hash = '#';
+    })
+  </script>
+@endpush

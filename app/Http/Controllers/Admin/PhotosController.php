@@ -18,20 +18,14 @@ class PhotosController extends Controller
             'photo' => 'required|image|max:2048'
         ]);
 
-        $photo = $request->file('photo')->store('public');
-
-        Photo::create([
-            'post_id' => $post->id,
-            'url' => Storage::url($photo)
+        $post->photos()->create([
+            'url' => $request->file('photo')->store('posts', 'public')
         ]);
     }
 
     public function destroy(Photo $photo)
     {
         $photo->delete();
-        
-        $photoUrl = Str::of($photo->url)->replace('storage', 'public');
-        Storage::delete($photoUrl);
         
         return redirect()->back()->with('flash','Foto eliminada');
     }
