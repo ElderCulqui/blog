@@ -20,11 +20,19 @@ class Post extends Model
 
     protected $dates = ['published_at'];
 
-    public function setTitleAttribute($title)
-    {
-        $this->attributes['title'] = $title;
-        $this->attributes['url'] = Str::slug($title, '-');
-    }
+    // public function setTitleAttribute($title)
+    // {
+    //     $this->attributes['title'] = $title;
+
+    //     $url = Str::slug($title);
+    //     $duplicateUrlCount = Post::where('url', 'like', "{$url}%")->count();
+
+    //     if ($duplicateUrlCount) {
+    //         $url .= "-" . ++$duplicateUrlCount;
+    //     }
+
+    //     $this->attributes['url'] = $url;
+    // }
     
     public function setCategoryIdAttribute($category)
     {
@@ -75,6 +83,21 @@ class Post extends Model
         static::deleting( function($post){
             $post->tags()->detach();
             $post->photos->each->delete();
+        });
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($post) {
+            $url = Str::slug($post['title']);
+
+            if (Post::whereUrl($url)->exists()) {
+                $url =  "{$url}-{$post->id}";
+            }
+
+            $post->update(['url' => $url]);
+
+            return $post;
         });
     }
 }

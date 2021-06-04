@@ -29,7 +29,7 @@ class PostsController extends Controller
     // }
 
     public function store(Request $request)
-    {   
+    {
         $validate = $request->validate(['title' => 'required|min:3']);
 
         $post = Post::create($validate);
@@ -47,7 +47,7 @@ class PostsController extends Controller
     public function update(StorePostRequest $request, Post $post)
     {
         $post->update($request->all());
-        
+
         $post->syncTags($request->tags);
 
         return redirect()
